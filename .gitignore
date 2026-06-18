@@ -15,3 +15,13 @@ data_*/
 mono_crash.*.json
 android
 web
+macos
+
+# Export builds / artifacts
+*.dmg
+
+# macOS / editor junk
+.DS_Store
+
+# Audacity temp files
+*.asd
