@@ -15,7 +15,7 @@ data_*/
 mono_crash.*.json
 android
 web
-macos
+macos/
 
 # Export builds / artifacts
 *.dmg
