@@ -18,7 +18,7 @@ config/name="Thilos 50th"
 run/main_scene="res://scenes/game.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
 boot_splash/stretch_mode=0
-boot_splash/image="uid://bdtkoq62lc75n"
+boot_splash/image="uid://e6rj7dxmaiwc"
 config/icon="res://icon.svg"
 
 [autoload]
@@ -30,7 +30,6 @@ Music="*res://scenes/music.tscn"
 window/size/viewport_width=640
 window/size/viewport_height=480
 window/stretch/mode="viewport"
-window/stretch/scale_mode="integer"
 window/vsync/vsync_mode=0
 
 [input]
@@ -60,5 +59,6 @@ pointing/emulate_touch_from_mouse=true
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+renderer/rendering_method="mobile"
 textures/vram_compression/import_etc2_astc=true
 environment/defaults/default_clear_color=Color(0, 0, 0, 1)

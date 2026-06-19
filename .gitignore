@@ -14,7 +14,11 @@ export_presets.cfg
 data_*/
 mono_crash.*.json
 android
-web
+# Web-Export ignorieren, aber das manuell hinzugefuegte Favicon behalten
+# (wird vom Export nicht erzeugt und ginge sonst verloren).
+/ThiloGame/web/*
+!/ThiloGame/web/favicon*.png
+!/ThiloGame/web/favicon.ico
 macos/
 
 # Export builds / artifacts

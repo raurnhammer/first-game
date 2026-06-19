@@ -1,89 +1,9 @@
-[gd_scene format=3 uid="uid://cirmggr1c124q"]
+[gd_scene load_steps=5 format=3 uid="uid://cirmggr1c124q"]
 
 [ext_resource type="Texture2D" uid="uid://bqi2aytanf43c" path="res://assets/sprites/happy_birthday.png" id="1_7nxk3"]
 [ext_resource type="Script" uid="uid://c0fw4dqshxvy4" path="res://scripts/happy_birthday.gd" id="2_restart"]
 [ext_resource type="FontFile" uid="uid://c53kogtyjwsss" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="3_font"]
-
-[sub_resource type="Gradient" id="Gradient_white"]
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_white"]
-gradient = SubResource("Gradient_white")
-width = 6
-height = 6
-
-[sub_resource type="Shader" id="Shader_confetti"]
-code = "shader_type particles;
-
-uniform float spawn_width = 680.0;
-uniform float fall_gravity = 120.0;
-uniform float vel_min = 40.0;
-uniform float vel_max = 90.0;
-
-uint myhash(uint x) {
-  x = ((x >> uint(16)) ^ x) * uint(0x45d9f3b);
-  x = ((x >> uint(16)) ^ x) * uint(0x45d9f3b);
-  x = (x >> uint(16)) ^ x;
-  return x;
-}
-
-float frand(inout uint seed) {
-  seed = myhash(seed);
-  return float(seed % uint(100000)) / 100000.0;
-}
-
-void start() {
-  uint seed = myhash(NUMBER + uint(1) + RANDOM_SEED + uint(TIME * 1000.0));
-  float rx = frand(seed);
-  float rv = frand(seed);
-  float rs = frand(seed);
-  float rc = frand(seed);
-
-  // Startposition am oberen Rand, zufaellig ueber die Breite verteilt.
-  vec4 local = vec4((rx - 0.5) * spawn_width, 0.0, 0.0, 1.0);
-  vec3 sp = (EMISSION_TRANSFORM * local).xyz;
-
-  // Praezise Position in CUSTOM merken, damit das Pixel-Snapping unten
-  // die Bewegung nicht abbremst.
-  CUSTOM = vec4(sp, 0.0);
-
-  // Ganzzahlige Skalierung (1x oder 2x), damit die Pixel scharf bleiben.
-  float s = (rs < 0.5) ? 1.0 : 2.0;
-  TRANSFORM = mat4(
-    vec4(s, 0.0, 0.0, 0.0),
-    vec4(0.0, s, 0.0, 0.0),
-    vec4(0.0, 0.0, 1.0, 0.0),
-    vec4(floor(sp.x + 0.5), floor(sp.y + 0.5), 0.0, 1.0));
-
-  VELOCITY = vec3(0.0, mix(vel_min, vel_max, rv), 0.0);
-
-  // Konfetti-Farbe aus fester Palette.
-  vec3 col = vec3(0.92, 0.2, 0.2);
-  int idx = int(rc * 6.0);
-  if (idx == 1) { col = vec3(0.96, 0.6, 0.1); }
-  else if (idx == 2) { col = vec3(0.97, 0.9, 0.2); }
-  else if (idx == 3) { col = vec3(0.3, 0.8, 0.3); }
-  else if (idx == 4) { col = vec3(0.2, 0.5, 0.95); }
-  else if (idx >= 5) { col = vec3(0.7, 0.3, 0.85); }
-  COLOR = vec4(col, 1.0);
-}
-
-void process() {
-  VELOCITY.y += fall_gravity * DELTA;
-  // Praezise Position integrieren, dann auf ganze Pixel runden.
-  CUSTOM.xyz += VELOCITY * DELTA;
-  TRANSFORM[3].x = floor(CUSTOM.x + 0.5);
-  TRANSFORM[3].y = floor(CUSTOM.y + 0.5);
-  TRANSFORM[3].z = 0.0;
-}
-"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_confetti"]
-shader = SubResource("Shader_confetti")
-shader_parameter/spawn_width = 680.0
-shader_parameter/fall_gravity = 120.0
-shader_parameter/vel_min = 40.0
-shader_parameter/vel_max = 90.0
+[ext_resource type="Script" uid="uid://dhdsygsd7ygja" path="res://scripts/confetti.gd" id="4_confetti"]
 
 [node name="HappyBirthday" type="CanvasLayer" unique_id=2119749129]
 layer = 5
@@ -95,14 +15,8 @@ offset_bottom = 480.0
 mouse_filter = 2
 color = Color(0.13333334, 0.08627451, 0.25882354, 1)
 
-[node name="Confetti" type="GPUParticles2D" parent="." unique_id=1197840782]
-position = Vector2(320, -20)
-amount = 150
-texture = SubResource("GradientTexture2D_white")
-lifetime = 5.0
-preprocess = 3.0
-randomness = 0.5
-process_material = SubResource("ShaderMaterial_confetti")
+[node name="Confetti" type="Node2D" parent="." unique_id=1197840782]
+script = ExtResource("4_confetti")
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=524767833]
 position = Vector2(320, 200)
