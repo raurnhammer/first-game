@@ -14,9 +14,11 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 [application]
 
-config/name="First Game"
+config/name="Thilos 50th"
 run/main_scene="res://scenes/game.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
+boot_splash/stretch_mode=0
+boot_splash/image="uid://bdtkoq62lc75n"
 config/icon="res://icon.svg"
 
 [autoload]

@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://bujx14eldxm87"]
+
+[ext_resource type="Script" uid="uid://b1iqyo2i3e0ww" path="res://scripts/beer_meter.gd" id="1_ehs61"]
+
+[node name="BeerMeter" type="Node2D" unique_id=1930064606]
+script = ExtResource("1_ehs61")
+maxBeer = 10
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1524249921]
+offset_right = 640.0
+offset_bottom = 64.0
+color = Color(0, 0, 0, 0.23529412)
