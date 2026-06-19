@@ -1,57 +1,60 @@
 extends CanvasLayer
 
-# On-Screen-Buttons fuer Touch/Maus. Sie loesen die normalen Input-Actions aus,
-# sodass der Player-Controller unveraendert bleibt.
+# Unsichtbarer "Floating Joystick" fuer Touch/Maus.
+#
+# Egal wo eine Beruehrung beginnt: dieser Punkt ist das Zentrum. Der Versatz
+# des Fingers vom Zentrum steuert die Figur:
+#   - nach links/rechts ziehen  -> move_left / move_right
+#   - nach oben ziehen          -> jump
+# Horizontale und vertikale Achse sind unabhaengig, daher ergibt sich
+# "hoch-rechts" = Sprung + nach rechts ganz automatisch.
+#
+# Die Tastatur (Pfeile / A,D / Leertaste) laeuft weiter ueber die normalen
+# Input-Actions und wird hier nicht angefasst.
 
-@onready var left_button = $Control/LeftButton
-@onready var right_button = $Control/RightButton
-@onready var jump_button = $Control/JumpButton
+## Ausschlag in Pixeln, ab dem links/rechts ausgeloest wird.
+@export var move_threshold: float = 24.0
+## Ausschlag nach oben in Pixeln, ab dem gesprungen wird.
+@export var jump_threshold: float = 40.0
 
-# Mappt jeden aktiven Finger (touch index) auf die Action, die er gerade haelt.
-# Noetig, damit links/rechts UND jump gleichzeitig moeglich sind – die
-# Maus-Emulation kann immer nur einen Finger abbilden.
-var _touch_actions := {}
+# Index des Fingers, der gerade den Joystick steuert (-1 = keiner).
+var _finger := -1
+# Bildschirmposition, an der die Beruehrung begann (= Joystick-Zentrum).
+var _origin := Vector2.ZERO
+# Aktuell gehaltene Actions, damit wir nur bei Aenderung pressen/releasen
+# (noetig, damit is_action_just_pressed beim Sprung genau einmal ausloest).
+var _active := {}
 
-func _ready():
-	# Desktop: Maus laeuft ueber die normalen Button-Signale.
-	_bind(left_button, "move_left")
-	_bind(right_button, "move_right")
-	_bind(jump_button, "jump")
-
-func _bind(button, action):
-	button.button_down.connect(func(): Input.action_press(action))
-	button.button_up.connect(func(): Input.action_release(action))
-
-func _input(event):
-	# Mobile: echte Multitouch-Events, jeder Finger einzeln.
+func _input(event: InputEvent) -> void:
 	if event is InputEventScreenTouch:
 		if event.pressed:
-			_press_finger(event.index, event.position)
-		else:
-			_release_finger(event.index)
-	elif event is InputEventScreenDrag:
-		# Finger ist von einem Button auf einen anderen (oder ins Leere) gerutscht.
-		if _touch_actions.get(event.index, "") != _action_at(event.position):
-			_release_finger(event.index)
-			_press_finger(event.index, event.position)
+			if _finger == -1:
+				_finger = event.index
+				_origin = event.position
+				_apply({})
+		elif event.index == _finger:
+			_finger = -1
+			_apply({})
+	elif event is InputEventScreenDrag and event.index == _finger:
+		_update(event.position - _origin)
 
-func _press_finger(index, pos):
-	var action = _action_at(pos)
-	if action == "":
-		return
-	Input.action_press(action)
-	_touch_actions[index] = action
+# Wandelt den Versatz vom Zentrum in gehaltene Actions um.
+func _update(offset: Vector2) -> void:
+	var wanted := {}
+	if offset.x <= -move_threshold:
+		wanted["move_left"] = true
+	elif offset.x >= move_threshold:
+		wanted["move_right"] = true
+	if offset.y <= -jump_threshold:
+		wanted["jump"] = true
+	_apply(wanted)
 
-func _release_finger(index):
-	if _touch_actions.has(index):
-		Input.action_release(_touch_actions[index])
-		_touch_actions.erase(index)
-
-func _action_at(pos) -> String:
-	if left_button.get_global_rect().has_point(pos):
-		return "move_left"
-	if right_button.get_global_rect().has_point(pos):
-		return "move_right"
-	if jump_button.get_global_rect().has_point(pos):
-		return "jump"
-	return ""
+# Setzt die Eingaben so, dass genau die Actions in "wanted" gehalten werden.
+func _apply(wanted: Dictionary) -> void:
+	for action in _active.keys():
+		if not wanted.has(action):
+			Input.action_release(action)
+	for action in wanted.keys():
+		if not _active.has(action):
+			Input.action_press(action)
+	_active = wanted

@@ -7,33 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://bgv5v2fxqlswe" path="res://scenes/platform.tscn" id="3_cmfc3"]
 [ext_resource type="PackedScene" uid="uid://pqp5qaw561fr" path="res://scenes/coin.tscn" id="4_28cek"]
 [ext_resource type="PackedScene" uid="uid://dtrbka1ef726o" path="res://scenes/killzone.tscn" id="5_x8euu"]
-[ext_resource type="Script" uid="uid://cf5pae1rb8q6r" path="res://scripts/touch_controls.gd" id="8_touch"]
 [ext_resource type="PackedScene" uid="uid://bujx14eldxm87" path="res://scenes/beer_meter.tscn" id="9_beer"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
-bg_color = Color(0.011764706, 0.14901961, 0.34901962, 0.5176471)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 70
-corner_radius_top_right = 70
-corner_radius_bottom_right = 70
-corner_radius_bottom_left = 70
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_pressed"]
-bg_color = Color(0, 0, 0, 0)
-draw_center = false
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 70
-corner_radius_top_right = 70
-corner_radius_bottom_right = 70
-corner_radius_bottom_left = 70
+[ext_resource type="Script" uid="uid://cf5pae1rb8q6r" path="res://scripts/touch_controls.gd" id="8_touch"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ashvg"]
 texture = ExtResource("2_r1crl")
@@ -259,66 +234,6 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 metadata/_edit_lock_ = true
-
-[node name="LeftButton" type="Button" parent="GameManager/TouchControls/Control" unique_id=1286814925]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 8.0
-offset_top = -148.0
-offset_right = 128.0
-offset_bottom = -28.0
-grow_vertical = 0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("2_nlliu")
-theme_override_font_sizes/font_size = 32
-theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_normal")
-theme_override_styles/focus = SubResource("StyleBoxFlat_btn_normal")
-text = "<"
-
-[node name="RightButton" type="Button" parent="GameManager/TouchControls/Control" unique_id=957000339]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 156.0
-offset_top = -148.0
-offset_right = 276.0
-offset_bottom = -28.0
-grow_vertical = 0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("2_nlliu")
-theme_override_font_sizes/font_size = 32
-theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_normal")
-theme_override_styles/focus = SubResource("StyleBoxFlat_btn_normal")
-text = ">"
-
-[node name="JumpButton" type="Button" parent="GameManager/TouchControls/Control" unique_id=2004591880]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -148.0
-offset_top = -148.0
-offset_right = -28.0
-offset_bottom = -28.0
-grow_horizontal = 0
-grow_vertical = 0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("2_nlliu")
-theme_override_font_sizes/font_size = 24
-theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_normal")
-theme_override_styles/focus = SubResource("StyleBoxFlat_btn_normal")
-text = "Jump"
 
 [node name="BeerMeter" parent="GameManager/TouchControls/Control" unique_id=1188208425 instance=ExtResource("9_beer")]
 position = Vector2(0, -8)
