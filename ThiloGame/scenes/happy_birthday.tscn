@@ -1,6 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://cirmggr1c124q"]
+[gd_scene format=3 uid="uid://cirmggr1c124q"]
 
 [ext_resource type="Texture2D" uid="uid://bqi2aytanf43c" path="res://assets/sprites/happy_birthday.png" id="1_7nxk3"]
+[ext_resource type="Script" uid="uid://c0fw4dqshxvy4" path="res://scripts/happy_birthday.gd" id="2_restart"]
+[ext_resource type="FontFile" uid="uid://c53kogtyjwsss" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="3_font"]
 
 [sub_resource type="Gradient" id="Gradient_white"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
@@ -83,24 +85,41 @@ shader_parameter/fall_gravity = 120.0
 shader_parameter/vel_min = 40.0
 shader_parameter/vel_max = 90.0
 
-[node name="HappyBirthday" type="CanvasLayer"]
+[node name="HappyBirthday" type="CanvasLayer" unique_id=2119749129]
 layer = 5
+script = ExtResource("2_restart")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="." unique_id=143061384]
 offset_right = 640.0
 offset_bottom = 480.0
-color = Color(0.13333334, 0.08627451, 0.25882353, 1)
+mouse_filter = 2
+color = Color(0.13333334, 0.08627451, 0.25882354, 1)
 
-[node name="Confetti" type="GPUParticles2D" parent="."]
+[node name="Confetti" type="GPUParticles2D" parent="." unique_id=1197840782]
 position = Vector2(320, -20)
 amount = 150
+texture = SubResource("GradientTexture2D_white")
 lifetime = 5.0
 preprocess = 3.0
 randomness = 0.5
-texture = SubResource("GradientTexture2D_white")
 process_material = SubResource("ShaderMaterial_confetti")
 
-[node name="Sprite" type="Sprite2D" parent="."]
-position = Vector2(320, 240)
+[node name="Sprite" type="Sprite2D" parent="." unique_id=524767833]
+position = Vector2(320, 200)
 scale = Vector2(2, 2)
 texture = ExtResource("1_7nxk3")
+
+[node name="ResultLabel" type="Label" parent="." unique_id=210383620]
+offset_left = 20.0
+offset_top = 340.0
+offset_right = 620.0
+offset_bottom = 432.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 16
+text = "Trotz dieses hohen Alters
+hast Du gerade %d Bier in %d sec getrunken.
+
+Hut ab!"
+horizontal_alignment = 1
+autowrap_mode = 2

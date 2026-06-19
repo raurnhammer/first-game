@@ -4,8 +4,13 @@ const HappyBirthdayScene = preload("res://scenes/happy_birthday.tscn")
 
 var score = 0
 var _celebrated := false
+# Zeitpunkt des Spielstarts in Millisekunden.
+var _start_time := 0
 
 @onready var beer_meter = $TouchControls/Control/BeerMeter
+
+func _ready() -> void:
+	_start_time = Time.get_ticks_msec()
 
 func add_point():
 	score += 1
@@ -13,4 +18,7 @@ func add_point():
 	# Alle Beers gesammelt -> Happy-Birthday-Szene mit Konfetti einblenden.
 	if not _celebrated and score >= beer_meter.maxBeer:
 		_celebrated = true
-		add_child(HappyBirthdayScene.instantiate())
+		var elapsed := (Time.get_ticks_msec() - _start_time) / 1000.0
+		var win = HappyBirthdayScene.instantiate()
+		add_child(win)
+		win.show_result(beer_meter.maxBeer, elapsed)
