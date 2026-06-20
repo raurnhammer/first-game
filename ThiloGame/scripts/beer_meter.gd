@@ -14,6 +14,10 @@ var beer_items: Array = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	# Nur die Hintergrundleiste auf die volle Breite ziehen – auf Android ist
+	# die Viewport-Breite durch stretch aspect "expand" groesser als die 640er-Basis.
+	container.size.x = get_viewport().get_visible_rect().size.x
+	# Die Glaeser bleiben links eng beieinander (festes spacing).
 	for i in range(maxBeer):
 		var item = BeerMeterItemScene.instantiate()
 		item.scale = Vector2(item_scale, item_scale)
