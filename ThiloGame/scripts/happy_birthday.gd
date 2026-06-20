@@ -24,24 +24,21 @@ func _layout() -> void:
 	$Background.size = vs
 	$Confetti.screen_size = vs
 	# Bild leicht ueber der Mitte halten (wie zuvor 200/480 ~ 0.417).
-	$Sprite.position = Vector2(vs.x * 0.5, vs.y * 0.417)
+	$Sprite.position = Vector2(vs.x * 0.5, $Sprite.position.y)
 	# Text ueber die volle Breite, am unteren Rand.
-	result_label.offset_left = 20.0
-	result_label.offset_right = vs.x - 20.0
-	result_label.offset_top = vs.y - 140.0
-	result_label.offset_bottom = vs.y - 48.0
+	#result_label.offset_left = 20.0
+	#result_label.offset_right = vs.x - 20.0
+	#result_label.offset_top = vs.y - 140.0
+	#result_label.offset_bottom = vs.y - 48.0
 
 # Setzt den Ergebnistext: Anzahl Bier + benoetigte Zeit in Sekunden.
 func show_result(count: int, seconds: float) -> void:
 	result_label.text = "Trotz dieses hohen Alters\nhast Du gerade %d Bier in %d sec getrunken.\n\nHut ab!" % [count, int(round(seconds))]
 
-func _input(event: InputEvent) -> void:
-	if event is InputEventKey:
-		if event.pressed and not event.echo and event.keycode == KEY_SPACE:
-			_restart()
-	elif event is InputEventScreenTouch:
-		if event.pressed:
-			_restart()
-
 func _restart() -> void:
+	print("restart")
 	get_tree().reload_current_scene()
+
+
+func _on_again_pressed() -> void:	
+	_restart()
