@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://dtrbka1ef726o" path="res://scenes/killzone.tscn" id="5_x8euu"]
 [ext_resource type="Script" uid="uid://cf5pae1rb8q6r" path="res://scripts/touch_controls.gd" id="8_touch"]
 [ext_resource type="PackedScene" uid="uid://bujx14eldxm87" path="res://scenes/beer_meter.tscn" id="9_beer"]
+[ext_resource type="PackedScene" uid="uid://tjqs8mh7hb11" path="res://scenes/gnomy.tscn" id="9_kvpfn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ashvg"]
 texture = ExtResource("2_r1crl")
@@ -220,6 +221,7 @@ _data = {
 [node name="GameManager" type="Node" parent="." unique_id=1878054059]
 unique_name_in_owner = true
 script = ExtResource("1_l4ihi")
+timeToCelebrate = 0.5
 
 [node name="TouchControls" type="CanvasLayer" parent="GameManager" unique_id=1736245305]
 script = ExtResource("8_touch")
@@ -306,6 +308,12 @@ position = Vector2(584, -104)
 
 [node name="Coin10" parent="Coins" unique_id=1498352063 instance=ExtResource("4_28cek")]
 position = Vector2(1640, -248)
+
+[node name="Gnomy2" parent="Coins" unique_id=1008849770 instance=ExtResource("9_kvpfn")]
+position = Vector2(1704, -320)
+
+[node name="Gnomy" parent="Coins" unique_id=38740271 instance=ExtResource("9_kvpfn")]
+position = Vector2(488, -176)
 
 [node name="Platforms" type="Node" parent="." unique_id=668600144]
 

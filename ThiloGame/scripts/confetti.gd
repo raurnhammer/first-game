@@ -29,6 +29,9 @@ const COLORS = [
 var _particles: Array = []
 
 func _ready() -> void:
+	# Tatsaechliche Viewport-Groesse uebernehmen (Basis 640x480 stimmt bei
+	# stretch aspect "expand" auf Android nicht mehr).
+	screen_size = get_viewport().get_visible_rect().size
 	for i in count:
 		# prefill=true -> beim Start ueber die ganze Hoehe verteilt.
 		_particles.append(_make(true))
