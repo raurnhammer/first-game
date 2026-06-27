@@ -241,7 +241,7 @@ metadata/_edit_lock_ = true
 [node name="BeerMeter" parent="GameManager/TouchControls/Control" unique_id=1188208425 instance=ExtResource("9_beer")]
 position = Vector2(0, -8)
 item_scale = 2.0
-spacing = 64.0
+spacing = 32.0
 
 [node name="Parallax2D" type="Parallax2D" parent="." unique_id=768076611]
 scroll_scale = Vector2(0.2, 0.6)
@@ -270,7 +270,7 @@ zoom = Vector2(2, 2)
 limit_bottom = 120
 limit_smoothed = true
 position_smoothing_enabled = true
-position_smoothing_speed = 4.0
+position_smoothing_speed = 8.0
 
 [node name="Killzone" parent="." unique_id=1186799105 instance=ExtResource("5_x8euu")]
 position = Vector2(74, 141)
